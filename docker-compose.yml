@@ -31,10 +31,20 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - php
-  php:
+      - app
+  app:
     build: ./php
     volumes:
       - ./apps:/code
-
+    links:
+      - db
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: SysReserve
+      MYSQL_PASSWORD: SysReservePass
+      MYSQL_DATABASE: SYS_RESERVE
+    ports:
+      - "3306:3306"
 #vim: set ts=2 sw=2 sts=2 expandtab ff=unix fenc=utf-8:
